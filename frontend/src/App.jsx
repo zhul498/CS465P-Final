@@ -1,122 +1,63 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Workouts from "./template/Workouts";
+import Progress from "./template/Progress";
+
+const sampleWorkouts = [
+  {
+    id: 1,
+    name: "Push Day",
+    date: "2026-11-16",
+    notes: "Chest and shoulders",
+    sets: [
+      { id: 1, exercise: "Bench Press", weight: 135, reps: 10 },
+      { id: 2, exercise: "Bench Press", weight: 135, reps: 8 },
+      { id: 3, exercise: "Shoulder Press", weight: 50, reps: 10 },
+    ],
+  },
+  {
+    id: 2,
+    name: "Leg Day",
+    date: "2026-11-14",
+    notes: "Squats and leg press",
+    sets: [
+      { id: 4, exercise: "Squat", weight: 185, reps: 8 },
+      { id: 5, exercise: "Squat", weight: 185, reps: 6 },
+    ],
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState("workouts");
+  const [workouts, setWorkouts] = useState(sampleWorkouts);
+
+  function addWorkout(workout) {
+    setWorkouts((previousWorkouts) => [workout, ...previousWorkouts]);
+  }
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <header>
+        <h1>LiftLog</h1>
+        <p>Log your workouts and track your progress</p>
 
-      <div className="ticks"></div>
+        <nav aria-label="Main navigation">
+          <button type="button" onClick={() => setPage("workouts")}>
+            Workouts
+          </button>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          <button type="button" onClick={() => setPage("progress")}>
+            Progress
+          </button>
+        </nav>
+      </header>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      {page === "workouts" ? (
+        <Workouts workouts={workouts} onAddWorkout={addWorkout} />
+      ) : (
+        <Progress />
+      )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
