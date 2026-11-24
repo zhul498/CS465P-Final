@@ -26,13 +26,13 @@ const sampleWorkouts = [
   },
 ];
 
-function App() {
+const App = function App() {
   const [page, setPage] = useState("workouts");
   const [workouts, setWorkouts] = useState(sampleWorkouts);
 
-  function addWorkout(workout) {
+  const addWorkout = function addWorkout(workout) {
     setWorkouts((previousWorkouts) => [workout, ...previousWorkouts]);
-  }
+  };
 
   return (
     <>
@@ -58,6 +58,6 @@ function App() {
       )}
     </>
   );
-}
+};
 
 export default App;

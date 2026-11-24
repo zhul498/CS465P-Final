@@ -67,9 +67,4 @@ Building frontend
 - Document libraries and outside resources
 - Review PRs
 
-## Notes
 
-- This is a planned steps, not a record of completed work
-- Confirm the actual Canvas deadline and adjust if needed
-- Start connecting to backend routes as goes
-- Keep accounts optional until the core app works

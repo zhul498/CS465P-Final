@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Workouts({ workouts, onAddWorkout }) {
+const Workouts = function Workouts({ workouts, onAddWorkout }) {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
@@ -12,19 +12,30 @@ function Workouts({ workouts, onAddWorkout }) {
     (workout) => workout.id === selectedWorkoutId,
   );
 
-  function closeForm() {
+  const closeForm = function closeForm() {
     setShowForm(false);
     setName("");
     setDate("");
     setNotes("");
     setError("");
-  }
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = function handleSubmit(event) {
     event.preventDefault();
 
     if (!name.trim()) {
-      setError("Please enter a workout name:");
+      setError("Please enter a workout name.");
+      return;
+    }
+
+    const workoutDate = new Date(`${date}T00:00:00Z`);
+
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+      Number.isNaN(workoutDate.getTime()) ||
+      workoutDate.toISOString().slice(0, 10) !== date
+    ) {
+      setError("Please enter a valid workout date.");
       return;
     }
 
@@ -38,7 +49,7 @@ function Workouts({ workouts, onAddWorkout }) {
 
     onAddWorkout(newWorkout);
     closeForm();
-  }
+  };
 
   if (selectedWorkout) {
     const sets = selectedWorkout.sets ?? [];
@@ -160,6 +171,6 @@ function Workouts({ workouts, onAddWorkout }) {
       )}
     </main>
   );
-}
+};
 
 export default Workouts;
