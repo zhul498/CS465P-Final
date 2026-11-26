@@ -30,14 +30,15 @@ db.exec(`
 const seed = db.prepare(
   "INSERT OR IGNORE INTO exercises (name, muscle_group) VALUES (?, ?)",
 );
-for (const [name, group] of [
+const starterExercises = [
   ["Bench Press", "Chest"],
   ["Shoulder Press", "Shoulders"],
   ["Squat", "Legs"],
   ["Deadlift", "Back"],
   ["Barbell Row", "Back"],
-]) {
+];
+starterExercises.forEach(([name, group]) => {
   seed.run(name, group);
-}
+});
 
 export default db;
